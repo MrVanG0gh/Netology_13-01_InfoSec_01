@@ -186,9 +186,10 @@ Nmap done: 1 IP address (1 host up) scanned in 67.40 seconds
 Теперь мы знаем какие службы на каких портах работают. С учетом известных версий найдем возможные уязвимости для 5 из них:
 
 -   ftp 21/tcp - vsftpd 2.3.4 - https://www.exploit-db.com/exploits/49757
-- 
-
-
+-   mysql 3306/tcp - MySQL 5.0.51a-3ubuntu5 - https://www.exploit-db.com/exploits/30020
+-   netbios-ssn 445/tcp - Samba smbd 3.0.20-Debian (workgroup: WORKGROUP) - https://www.exploit-db.com/exploits/16320
+-   mysql 3306/tcp - MySQL 5.0.51a-3ubuntu5 - https://www.exploit-db.com/exploits/30020
+-   postgresql 5432/tcp - PostgreSQL DB 8.3.0 - 8.3.7 - https://www.exploit-db.com/exploits/7855
 
 ---
 
