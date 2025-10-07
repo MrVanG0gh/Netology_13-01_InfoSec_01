@@ -207,4 +207,39 @@ Nmap done: 1 IP address (1 host up) scanned in 67.40 seconds
 
 ## Решение 2
 
+Проведем сканирование в различных режимах.
+
+Начнем с SYN
+
+```
+nmap -sS 192.168.1.123
+```
+
+![Screen_1](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_1.png)
+
+Затем в режиме FIN
+
+```
+nmap -sA 192.168.1.123
+```
+
+![Screen_2](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_2.png)
+
+В режиме Xmas
+
+```
+nmap -sX 192.168.1.123
+```
+
+![Screen_3](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_3.png)
+
+И в режиме UDP
+
+```
+nmap -sU 192.168.1.123
+```
+
+![Screen_4](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_4.png)
+
+
 ---
