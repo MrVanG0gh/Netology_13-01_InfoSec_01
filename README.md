@@ -180,7 +180,7 @@ Nmap done: 1 IP address (1 host up) scanned in 67.40 seconds
 - vnc 5900/tcp
 - X11 6000/tcp
 - irc 6667/tcp
-- ajp13 8009
+- ajp13 8009/tcp
 - http 8180/tcp
 
 Теперь мы знаем какие службы на каких портах работают. С учетом известных версий найдем возможные уязвимости для 5 из них:
@@ -218,14 +218,20 @@ nmap -sS 192.168.1.123
 ![Screen_1](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_1.png)
 [Link to pcap](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/pcaps/Metasploited_sS.pcapng)
 
+Здесь видно, что при сканировании nmap передает L4-сегмент c поднятым флагом SYN (попытка установления соединения на отдельно взятом порте).
+Ответ сервера может содержать сегмент с флагами [SYN, ACK] - порт открыт, либо с [RST, ACK] - порт закрыт.
+
 Затем в режиме FIN
 
 ```
-nmap -sA 192.168.1.123
+nmap -sF 192.168.1.123
 ```
 
-![Screen_2](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_2.png)
-[Link to pcap](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/pcaps/Metasploited_sA.pcapng)
+![Screen_2](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_6.png)
+[Link to pcap](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/pcaps/Metasploited_sF.pcapng)
+
+Здесь видно, что при сканировании nmap передает L4-сегмент c поднятым флагом FIN (попытка завершить установленное соединение).
+Ответ сервера позволяет сделать вывод о том, закрыт ли порт (в ответном сегменте будут подняты флаги [RST, ACK], либо он открыт/фильтруется (об этом говорит отсутствие ответа от сервера)
 
 В режиме Xmas
 
@@ -236,6 +242,10 @@ nmap -sX 192.168.1.123
 ![Screen_3](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_3.png)
 [Link to pcap](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/pcaps/Metasploited_sX.pcapng)
 
+В данном случае мы передаем сегменты с поднятыми флагами [FIN, PSH, URG]
+Проявление очень схоже с режимом FIN (также отсутствие ответа говорит о том, что порт открыт). Если порт закрыт, то в ответном сегменте 
+будут подняты флаги [ACK, RST]
+
 И в режиме UDP
 
 ```
@@ -245,5 +255,7 @@ nmap -sU 192.168.1.123
 ![Screen_4](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/Screenshots/Screenshot_4.png)
 [Link to pcap](https://github.com/MrVanG0gh/Netology_13-01_InfoSec_01/blob/main/pcaps/Metasploited_sU.pcapng)
 
+Этот способ оказался самым долгим из испробованных. Здесь мы проверяем открытые порты сервера для работы по протоколу UDP.
+Если на наш запрос пришла ответная дейтаграмма, значит порт открыт. Если мы получили ответ по протоколу ICMP (порт недоступен), значит порт - закрыт.
 
 ---
